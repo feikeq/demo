@@ -9,9 +9,8 @@
     <p>_id:{{ $route.params }}</p>
     <p>{{todos}}</p>
     <p>{{foo}}</p>
-    <p><a href="javascript:;" @click="add('hahahahah')">addddddd</a></p>
     <div>
-        <AButton type="primary">Primary Button</AButton>
+        <AButton type="primary" @click="add('hahahahah')">添加数据ADD</AButton>
         <AButton>Default AButton</AButton>
         <AButton type="dashed">Dashed AButton</AButton>
         <br />
@@ -25,6 +24,8 @@
 
 <script>
 import { mapMutations } from 'vuex';
+// import axios from 'axios';
+
 export default {
   asyncData({ req, res,params }) {
     // 每次加载组件前调用 
@@ -34,7 +35,8 @@ export default {
     // console.log('response:',res);
     console.log('params:',params);
     // console.log('req.headers.host:',req.headers);
-    return { name: '路由地址fullPath' }
+    // console.log('aaaaappppapp',axios);
+    return { name: '路由地址 fullPath' }
   },
   methods:{
       ...mapMutations({
@@ -43,15 +45,28 @@ export default {
   },
   data() {
       //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
-    console.log("------data------");
-    console.log('data访问不了asyncData的值呀',this.name);
+    console.log("------data------",this);
+    // console.log('data访问不了asyncData的值呀',this.name);
     return { foo: 'bar',current:null }
   },
-  fetch() {
+  fetch(store, params) {
     // fetch方法用于在呈现页面之前填充存储
+    // 与 asyncData 方法类似，用于在渲染页面之前获取数据填充应用的状态树（store）。
+    // 不同的是 fetch 方法不会设置组件的数据。
+    // 如果页面组件设置了 fetch 方法，它会在组件每次加载前被调用（在服务端或切换至目标路由之前）。
+    // 警告: 您无法在内部使用this获取组件实例，fetch是在组件初始化之前被调用
+    // fetch 方法会在渲染页面前被调用，作用是填充状态树 (store) 数据，与 asyncData 方法类似，不同的是它不会设置组件的数据。
+
+    console.log('----fetch----',this);
+
+ 
+    
+ 
+
   },
+
   head() {
-    // 为此页设置元标记
+    // 配置当前页面的 Meta 标签 ,为此页设置元标记
     return {
       title: '🚀网站的标题('+this.$route.params.id +')',
       meta: [
@@ -64,6 +79,11 @@ export default {
         },
       ],
     }
+  },
+  layout(context) {
+      // 指定当前页面使用的布局（layouts 根目录下的布局文件）。
+      // layouts 根目录下的所有文件都属于个性化布局文件，可以在页面组件中利用 layout 属性来引用。
+    //   return 'blog'
   },
   computed: {
     todos () {

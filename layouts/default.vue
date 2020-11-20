@@ -5,7 +5,11 @@
             <dd class="logo fleft">LOGO</dd>
             <nav>
                 <AMenu v-model="current" mode="horizontal" theme='dark'>
-                    <AMenuItem key="live"><img src="/menu/live.png" /> 直播</AMenuItem>
+                    <AMenuItem key="live">
+                        <NLink to="/">
+                        <img src="/menu/live.png" /> 直播
+                        </NLink>
+                    </AMenuItem>
                     <AMenuItem key="match"><img src="/menu/match.png" /> 赛事</AMenuItem>
                     <AMenuItem key="data"><img src="/menu/data.png" /> 数据</AMenuItem>
                     <ASubMenu>

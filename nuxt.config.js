@@ -1,5 +1,9 @@
 export default {
     // ssr: false,//仅限客户端渲染
+    server: {
+        port: 8888, // default: 3000
+        host: '0.0.0.0' // default: localhost
+      },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'demo',
@@ -21,7 +25,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '~/plugins/FKaxios'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -34,7 +39,7 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios', //您现在可以在Nuxt应用中使用$axios✨
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
@@ -42,7 +47,19 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    proxy: true, // 跨域请求代理
+    // baseURL: 'http://www.baidu.com/', //定义用于请求服务器端请求的基本URL。
+  },
+
+  proxy: {
+    '/api': {
+      target: 'http://www.baidu.com/',
+      pathRewrite: {
+        '^/api' : '/'
+      }
+    }
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
