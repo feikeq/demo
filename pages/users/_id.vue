@@ -27,7 +27,7 @@ import { mapMutations } from 'vuex';
 // import axios from 'axios';
 
 export default {
-  asyncData({ req, res,params }) {
+  asyncData({query,app, req, res,params }) {
     // 每次加载组件前调用 
     // 由于asyncData方法是在组件 初始化 前被调用的，所以在方法内是没有办法通过 this 来引用组件的实例对象会提示undefined。
     console.log('.......asyncData......'); //
@@ -35,7 +35,8 @@ export default {
     // console.log('response:',res);
     console.log('params:',params);
     // console.log('req.headers.host:',req.headers);
-    // console.log('aaaaappppapp',axios);
+    console.log('aaaaapppp app axios',app.$axios);
+    console.log("query",query);
     return { name: '路由地址 fullPath' }
   },
   methods:{
