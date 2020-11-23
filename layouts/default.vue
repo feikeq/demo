@@ -83,7 +83,7 @@ export default {
   head() {
     // 为此页设置元标记
     return {
-      title: '🚀网站的标题('+this.$route.params.id +')',
+      title: '网站的标题('+this.$route.params.id +')',
       meta: [
         { name: 'keywords', content: 'HTML,CSS,XML,JavaScript' },
         { name: 'author', content: 'FK68.net' },

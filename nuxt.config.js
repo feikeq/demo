@@ -6,14 +6,20 @@ export default {
       },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'demo',
+    title: '网站标题',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content:'black'},
+      { name: 'apple-mobile-web-app-title', content:"网站标题"},
+      { hid: 'og:title', name: 'og:title', content: '网站标题1' },
+      { hid: 'og:site_name', name: 'og:site_name', content: '网站标题2' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', type: 'image/x-icon', href: `/exp.png` }
     ]
   },
 
@@ -65,5 +71,5 @@ export default {
   content: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {}
+  build: {},
 }
