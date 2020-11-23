@@ -15,11 +15,13 @@ export default {
       { name: 'apple-mobile-web-app-title', content:"网站标题"},
       { hid: 'og:title', name: 'og:title', content: '网站标题1' },
       { hid: 'og:site_name', name: 'og:site_name', content: '网站标题2' },
-      { hid: 'description', name: 'description', content: '' }
+      { name: 'msapplication-TileImage', content: '/exp.png' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', type: 'image/x-icon', href: `/exp.png` }
+      { rel: 'icon', type: 'image/x-icon', href: '/exp.png' },
+      { rel: 'apple-touch-icon', type: 'image/x-icon', href: `/exp.png` },
+      { rel:"apple-touch-icon",href:"/exp.png",sizes:"512x512"}
+      
     ]
   },
 
