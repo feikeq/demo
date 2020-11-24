@@ -1,31 +1,18 @@
 import Vue from 'vue'
 import Antd from 'ant-design-vue/lib'
-import utils from '~/plugins/utils.js'
+import utils from '~/plugins/utils'
 
-import utils2 from '@/plugins/utils2' //utils2.js  里的 export default
-import { realFormatSecond } from '@/plugins/utils2' //utils2.js  里的 export const realFormatSecond
 Vue.use(Antd)
-// Vue.use(utils2)
-Vue.prototype.$utils2 = realFormatSecond
 
 /*
-如何使Nuxt成为全局对象？
-plugin 一般向外暴露一个函数，该函数接收两个参数分别是 context 和 inject
-    context： 上下文对象，该对象存储很多有用的属性。比如常用的 app 属性，包含所有插件的 Vue 根实例。例如：在使用 axios 的时候，你想获取 $axios 可以直接通过 context.app.$axios 来获取。
-    inject： 该方法可以将 plugin 同时注入到 context， Vue 实例， Vuex 中。
-    例：
-
-
-    import Api from './api' // 自定变量内容 其他自便
-    // 这里是 为了在 asyncData 方法中使用
-    export default ({ app }, inject) => {
-        // Set the function directly on the context.app object
-        app.$api = Api // 名称
-    };
-
- */
-
-// 注入对象。随处可见的通过前缀$访问插件。
-export default function (context, inject) {
+注入对象。随处可见的通过前缀$访问插件。
+-----------------------------------
+同时注入context，Vue实例，甚至Vuex
+可以使用inject方法,它是plugin导出函数的第二个参数。 
+将内容注入Vue实例的方式与在Vue应用程序中进行注入类似。
+系统会自动将$添加到方法名的前面。
+*/
+export default function ({ app: { $request } }, inject) {
   inject('utils', utils) //NUXT 注册全局组件
+  //现在就可以在context，或者Vue实例中的this，或者Vuex的actions/mutations方法中的this来调用 $utils 内的方法与函数
 }

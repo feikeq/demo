@@ -59,7 +59,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/antd-ui', '~/plugins/FKaxios', '~/plugins/utils2'],
+  plugins: ['@/plugins/antd-ui', '~/plugins/FKaxios'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
