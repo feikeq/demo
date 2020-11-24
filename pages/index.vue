@@ -4,17 +4,21 @@
       <Logo />
       <h1 class="title">
         demo
+        {{ $utils2(75) }}
       </h1>
       <div class="links">
-          <NLink to="./users/">users</NLink>
-         
+        <NLink to="./users/">users</NLink>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    console.log('$utils2', this.$utils2)
+  },
+}
 </script>
 
 <style>
@@ -28,16 +32,8 @@ export default {}
 }
 
 .title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

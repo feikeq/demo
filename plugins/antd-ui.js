@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Antd from 'ant-design-vue/lib'
 import utils from '~/plugins/utils.js'
+
+import utils2 from '@/plugins/utils2' //utils2.js  里的 export default
+import { realFormatSecond } from '@/plugins/utils2' //utils2.js  里的 export const realFormatSecond
 Vue.use(Antd)
+// Vue.use(utils2)
+Vue.prototype.$utils2 = realFormatSecond
 
 /*
 如何使Nuxt成为全局对象？
