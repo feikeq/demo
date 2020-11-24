@@ -1,48 +1,71 @@
 export default {
-    // ssr: false,//仅限客户端渲染
-    server: {
-        port: 8888, // default: 3000
-        host: '0.0.0.0' // default: localhost
-      },
+  // ssr: false,//仅限客户端渲染
+  server: {
+    port: 8888, // default: 3000
+    host: '0.0.0.0', // default: localhost
+    // https: {
+    //     key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+    //     cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
+    //   }
+  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: '网站标题',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'viewport',
+        content:
+          'width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover',
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content:
+          '肥客,FK,FeiKeWorld,肥客联邦,FK68,FK68.net,废客网站,废客软件,肥客官网,废客官方,废客CS,FK,网站设计制作建设,软件定制外包开发,平面设计UI设计UX设计',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          '肥客是专业的网络应用服务商。我们的团队凭借扎实的技术与优质的服务为企业、公司、政府等部门量身定制软件与网站的网络应用和用户体验。有非凡志向，才有非凡成就。',
+      },
+
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
-      { name: 'apple-mobile-web-app-status-bar-style', content:'black'},
-      { name: 'apple-mobile-web-app-title', content:"网站标题"},
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
+      { name: 'apple-mobile-web-app-title', content: '网站标题' },
       { hid: 'og:title', name: 'og:title', content: '网站标题1' },
       { hid: 'og:site_name', name: 'og:site_name', content: '网站标题2' },
-      { name: 'msapplication-TileImage', content: '/exp.png' }
+      { name: 'msapplication-TileImage', content: '/exp.png' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/exp.png' },
       { rel: 'apple-touch-icon', type: 'image/x-icon', href: `/exp.png` },
-      { rel:"apple-touch-icon",href:"/exp.png",sizes:"512x512"}
-      
-    ]
+      { rel: 'apple-touch-icon', href: '/exp.png', sizes: '512x512' },
+    ],
+  },
+
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: {
+    color: 'red',
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     'ant-design-vue/dist/antd.css',
-    '~assets/main.css' //你必须在 url CSS 引用中使用~assets（没有斜杠）或@别名，即background:url("~assets/banner.svg")
+    '~assets/main.css', //你必须在 url CSS 引用中使用~assets（没有斜杠）或@别名，即background:url("~assets/banner.svg")
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    '@/plugins/antd-ui',
-    '~/plugins/FKaxios'
-  ],
+  plugins: ['@/plugins/antd-ui', '~/plugins/FKaxios'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-  ],
+  buildModules: [],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -64,9 +87,9 @@ export default {
     '/api': {
       target: 'http://www.baidu.com/',
       pathRewrite: {
-        '^/api' : '/'
-      }
-    }
+        '^/api': '/',
+      },
+    },
   },
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
