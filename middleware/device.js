@@ -7,7 +7,7 @@ middleware 中间件：允许您定义一个自定义函数运行在一个页面
     2.匹配布局
     3.匹配页面
     中间件可以异步执行,只需要返回一个 Promise 或使用第 2 个 callback 作为第一个参数
-    中间件 可以在 pages 或者 layouts 或者 nuxt.config.js的路由router中 使用
+    中间件 可以在 pages 或者 layouts 或者 nuxt.config.js的路由router中(往router注入中间件即可全局生效) 使用
 */
 
 import { UAParser } from "ua-parser-js"; // https://github.com/faisalman/ua-parser-js

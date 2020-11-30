@@ -47,8 +47,11 @@ export default {
       "asyncData __ $utils2",
       app.$utils.addQueryString("http://www.t.cn/?c=2", "a=1")
     );
-    var UA = new UAParser().getBrowser();
-    console.log("index.vue [asyncData] ua_parser", UA);
+
+    console.log('req.headers["user-agent"]', req, res);
+    // var UA = UAParser(req.headers["user-agent"]);
+    // console.log("index.vue [asyncData] ua_parser", UA);
+    var UA = {};
 
     return { FKasyncData: "肥客FK项目", UA };
   },
