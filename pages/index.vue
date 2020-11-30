@@ -48,10 +48,15 @@ export default {
       app.$utils.addQueryString("http://www.t.cn/?c=2", "a=1")
     );
 
-    console.log('req.headers["user-agent"]', req, res);
-    // var UA = UAParser(req.headers["user-agent"]);
-    // console.log("index.vue [asyncData] ua_parser", UA);
-    var UA = {};
+    // 请检查您是否在服务器端
+    // 使用 req 和 res
+    if (process.server) {
+      console.log("req.headers", req.headers);
+    }
+
+    console.log('req.headers["user-agent"]', req.headers["user-agent"]);
+    var UA = UAParser(req.headers["user-agent"]);
+    console.log("index.vue [asyncData] ua_parser", UA.browser);
 
     return { FKasyncData: "肥客FK项目", UA };
   },
