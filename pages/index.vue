@@ -24,6 +24,7 @@
         <pre>
             {{ LUA }}
         </pre>
+        <b>{{ ccav }}</b> <button @click="changeccav">改变ccav值</button>
       </h1>
       <div class="links">
         <NLink to="./users/">users</NLink>
@@ -77,6 +78,10 @@ export default {
     ...mapMutations({
       add: "todos/add",
     }),
+    changeccav() {
+      this.ccav = !this.ccav;
+      console.log("ccav", this.ccav);
+    },
   },
   data() {
     //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
@@ -93,7 +98,21 @@ export default {
       console.log("data访问不了asyncData的值呀", this.FKasyncData);
     }
 
-    return { FKdata: "测试数据bar", LUA };
+    var ccav = "假的false";
+    if (LUA.browser) {
+      ccav = true;
+      console.log("");
+      console.log("");
+      console.log("");
+      console.log("");
+      console.log("         LUA.browser ", LUA.browser);
+      console.log("ccav:", ccav);
+      console.log("这里明明把CCAV置成了true为什么creat里还是false");
+      console.log("");
+      console.log("");
+    }
+
+    return { FKdata: "测试数据bar", LUA, ccav };
   },
   fetch() {
     // fetch方法用于在呈现页面之前填充存储
@@ -119,6 +138,9 @@ export default {
     },
   },
   created() {
+    console.log("server:" + process.server, "client:" + process.client);
+    console.log("==this==", this.ccav); //这里都还是 true
+    console.log("==this==", this); // 展开后变成 false
     console.log("created访问asyncData的值", this.FKasyncData, this.UA);
     console.log("created访问data的值", this.FKdata, this.LUA);
   },
