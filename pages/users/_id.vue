@@ -23,7 +23,7 @@ import { mapMutations } from "vuex";
 // import axios from 'axios';
 
 export default {
-  asyncData({ app, query, params, req, res, error }) {
+  async asyncData({ app, query, params, req, res, error }) {
     // 每次加载组件前调用 https://www.nuxtjs.cn/api/context
     // 由于asyncData方法是在组件 初始化 前被调用的，所以在方法内是没有办法通过 this 来引用组件的实例对象会提示undefined。
     console.log(
@@ -36,7 +36,19 @@ export default {
     // console.log('req.headers.host:',req.headers);
     console.log("aaaaapppp app axios", app.$axios);
     console.log("query", query);
-    return { name: "路由地址 fullPath" };
+
+    var name = "(没有异步) 路由地址 fullPath";
+
+    var ajaxTest = function () {
+      return new Promise((resolve, reject) => {
+        setTimeout(function () {
+          name = "(异步操作) 路由地址 fullPath";
+          resolve(name);
+        }, 500);
+      });
+    };
+    await ajaxTest();
+    return { name };
   },
   methods: {
     ...mapMutations({
