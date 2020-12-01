@@ -4,12 +4,23 @@
       <Logo />
 
       <h1 class="title">
-        {{ FKasyncData + "-" + "asyncData()" + UA.name }}
+        {{
+          FKasyncData +
+          "-" +
+          "asyncData()" +
+          (UA && UA.browser ? UA.browser.name : "UA")
+        }}
         <pre>
             {{ UA }}
         </pre>
         <br />
-        {{ FKdata + "-" + "data()" + LUA.name }}
+        <br />
+        {{
+          FKdata +
+          "-" +
+          "data()" +
+          (LUA && LUA.browser ? LUA.browser.name : "LUA")
+        }}
         <pre>
             {{ LUA }}
         </pre>
@@ -44,19 +55,21 @@ export default {
     // 由于asyncData方法是在组件 初始化 前被调用的，所以在方法内是没有办法通过 this 来引用组件的实例对象会提示undefined。
     console.log(".......asyncData......");
     console.log(
-      "asyncData __ $utils2",
+      "使用公共函数库 __ $utils2",
       app.$utils.addQueryString("http://www.t.cn/?c=2", "a=1")
     );
+    var UA = {};
 
     // 请检查您是否在服务器端
-    // 使用 req 和 res
     if (process.server) {
-      console.log("req.headers", req.headers);
+      // 如果不加这一层判断，当你在开发状态时动态保存代码刷新页面就会报错 headers 没有定义
+      // 使用 req 和 res
+      //   console.log("+++req.headers++", req.headers);
+      let user_agent = req.headers["user-agent"];
+      //   console.log('req.headers["user-agent"]', user_agent);
+      UA = UAParser(user_agent);
+      console.log("index.vue [asyncData] ua_parser", UA.browser);
     }
-
-    console.log('req.headers["user-agent"]', req.headers["user-agent"]);
-    var UA = UAParser(req.headers["user-agent"]);
-    console.log("index.vue [asyncData] ua_parser", UA.browser);
 
     return { FKasyncData: "肥客FK项目", UA };
   },
@@ -68,14 +81,18 @@ export default {
   data() {
     //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
     console.log("------pages------");
+    // console.log("server:" + process.server, "client:" + process.client);
 
-    var LUA = new UAParser().getBrowser();
-    console.log("default.vue [data] ua_parser", LUA);
-    console.log("------------");
-    console.log(LUA.name);
-    console.log("------------");
+    var LUA = {};
 
-    console.log("data访问不了asyncData的值呀", this.FKasyncData);
+    // 请检查您是否在客户端
+    if (process.client) {
+      var parser = new UAParser();
+      LUA = parser.getResult();
+      console.log("index.vue [data] ua_parser", LUA.browser);
+      console.log("data访问不了asyncData的值呀", this.FKasyncData);
+    }
+
     return { FKdata: "测试数据bar", LUA };
   },
   fetch() {
@@ -102,8 +119,8 @@ export default {
     },
   },
   created() {
-    console.log("created访问asyncData的值", this.FKasyncData, this.UA.name);
-    console.log("created访问data的值", this.FKdata, this.LUA.name);
+    console.log("created访问asyncData的值", this.FKasyncData, this.UA);
+    console.log("created访问data的值", this.FKdata, this.LUA);
   },
 };
 </script>

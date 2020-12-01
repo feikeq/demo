@@ -13,6 +13,7 @@ middleware 中间件：允许您定义一个自定义函数运行在一个页面
 import { UAParser } from "ua-parser-js"; // https://github.com/faisalman/ua-parser-js
 export default function (context) {
   console.log("----------middleware---------");
+  //   console.log("server:" + process.server, "client:" + process.client);
   //一个中间件接收 context 作为第一个参数：
   context.userAgent = process.server
     ? context.req.headers["user-agent"]
