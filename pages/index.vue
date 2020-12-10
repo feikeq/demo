@@ -3,7 +3,11 @@
     <div>
       <Logo />
 
-      <h1 class="title">
+      <div class="links">
+        <NLink to="./users/">🚀🚀🚀 进入users路由节点 🚀🚀</NLink>
+      </div>
+
+      <h3 class="title">
         {{
           FKasyncData +
           "-" +
@@ -25,10 +29,8 @@
             {{ LUA }}
         </pre>
         <b>{{ ccav }}</b> <button @click="changeccav">改变ccav值</button>
-      </h1>
-      <div class="links">
-        <NLink to="./users/">users</NLink>
-      </div>
+      </h3>
+      
     </div>
   </div>
 </template>

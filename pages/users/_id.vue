@@ -1,6 +1,7 @@
 <template>
   <div>
-    🚀
+      <app-title title="战队排行" icon="/icon.png">[插槽 组件不需要 import 好像默认都是全局的，但vuex必须 import { mapMutations } from "vuex" ]</app-title>
+    
     {{ name }}：：{{ $route.fullPath }}
     <p>_id:{{ $route.params }}</p>
     <p>{{ todos }}</p>
@@ -15,6 +16,7 @@
       <AButton type="text">Text AButton</AButton>
       <AButton type="link">Link AButton</AButton>
     </div>
+    
   </div>
 </template>
 
