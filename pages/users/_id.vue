@@ -56,6 +56,10 @@ export default {
     ...mapMutations({
       add: "todos/add",
     }),
+    currentChange(page){
+        console.log('--------------翻页------------');
+        this.$router.push({ query: {page: page}});
+    },
   },
   data() {
     //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
@@ -106,6 +110,18 @@ export default {
       return this.$store.state.todos.list;
     },
   },
+  watchQuery: ['page'] // watchQuery监听翻页 - 网址路径上参数的变化
+  /*
+  nuxt的官方文档中提供了watchQuery属性可以监听参数字符串的更改。
+  如果定义的字符串发生变化，将调用所有组件方法(asyncData, fetch, validate, layout, …)。 
+  为了提高性能，默认情况下禁用。
+  如果您要为所有参数字符串设置监听， 请设置： watchQuery: true.
+  首先如果要全局使用watchQuery，那就在nuxt.config.js中全局配置
+    module.exports = {
+        watchQuery: true
+    }
+  如果不在nuxt.config.js中全局配置，那就默认是只在当前页面的监听
+  */
 };
 </script>
 
