@@ -50,7 +50,10 @@ export default {
       });
     };
     await ajaxTest();
-    return { name };
+    return {
+        head:app.head,  // nuxt.config.js 里的head配置
+        name 
+    };
   },
   methods: {
     ...mapMutations({
@@ -82,20 +85,14 @@ export default {
     // 你也可以在页面组件中使用 head 配置并通过 this 关键字来获取组件的数据
     // 配置当前页面的 Meta 标签 ,为此页设置元标记
     return {
-      title: "网站的标题(" + this.$route.params.id + ")🚀",
+      title: "网站的标题(" + this.$route.params.id + ")🚀 - " + this.head.title,
       meta: [
-        { name: "keywords", content: "HTML,CSS,XML,JavaScript" },
-        { name: "author", content: "FK68.net" },
-        {
-          hid: "keywords",
-          name: "keywords",
-          content:
-            "掘金,稀土,Vue.js,微信小程序,Kotlin,RxJava,React Native,Wireshark,敏捷开发,Bootstrap,OKHttp,正则表达式,WebGL,Webpack,Docker,MVVM",
-        },
+        { name: "keywords", hid: "keywords", content: "微信小程序,React Native,Wireshark,敏捷开发,Bootstrap,WebGL,Webpack,Docker,MVVM," + this.head.meta[2].content },
+        { name: "author", hid: "author", content: "FK68.net" },
         {
           hid: "description", //为了避免子组件中的 meta 标签不能正确覆盖父组件中相同的标签而产生重复的现象，建议利用 hid 键为 meta 标签配一个唯一的标识编号。
           name: "description",
-          content: "网站的描述...",
+          content: "为了避免子组件中的 meta 标签不能正确覆盖父组件中相同的标签而产生重复的现象，建议利用 hid 键为 meta 标签配一个唯一的标识编号",
         },
       ],
     };

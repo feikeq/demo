@@ -74,7 +74,9 @@ export default {
       console.log("index.vue [asyncData] ua_parser", UA.browser);
     }
 
-    return { FKasyncData: "肥客FK项目", UA };
+    return {
+        head:app.head,  // nuxt.config.js 里的head配置
+        FKasyncData: "肥客FK项目", UA };
   },
   methods: {
     ...mapMutations({
@@ -122,14 +124,14 @@ export default {
   head() {
     // 为此页设置元标记
     return {
-      title: "网站的标题2(" + this.$route.params.id + ")",
+      title: "网站的标题2(" + this.$route.params.id + ") - " + this.head.title ,
       meta: [
-        { name: "keywords", content: "HTML,CSS,XML,JavaScript" },
-        { name: "author", content: "FK68.net" },
+        { name: "keywords",hid: "keywords", content: "HTML,CSS,XML,JavaScript," + this.head.meta[2].content },
+        { name: "author",hid: "author", content: "FK68.net" },
         {
           hid: "description", //为了避免子组件中的 meta 标签不能正确覆盖父组件中相同的标签而产生重复的现象，建议利用 hid 键为 meta 标签配一个唯一的标识编号。
           name: "description",
-          content: "网站的描述...",
+          content: "网站的描述2...",
         },
       ],
     };
