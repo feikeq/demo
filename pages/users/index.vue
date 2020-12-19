@@ -13,28 +13,7 @@
 
 <script>
 export default {
-  //   asyncData() {
-  //     // 数组解构获得对应请求的数据
-  //     let [indexData, recommendAuthors, recommendBooks] = await Promise.all([
-  //       // 文章列表
-  //       app.$api.getIndexList({
-  //         first: 20,
-  //         order: 'POPULAR',
-  //         category: 1
-  //       }).then(res => res.s == 1 ? res.d : {}),
-  //       // 推荐作者
-  //       app.$api.getRecommendAuthor({
-  //         limit: 5
-  //       }).then(res => res.s == 1 ? res.d : []),
-  //       // 推荐小册
-  //       app.$api.getRecommendBook().then(res => res.s === 1 ? res.d.data : []),
-  //     ])
-  //     return {
-  //       indexData,
-  //       recommendAuthors,
-  //       recommendBooks
-  //     }
-  //   }
+    
 
 
 
@@ -43,100 +22,21 @@ export default {
   async asyncData({ app, params,query,env,$config },callback) {
         console.log("::::::::: asyncData ::::::::");
         let _data = {
-            title:'战队排行榜',
+            title:'排行榜',
             name:app.head.title,
-            empty:"暂无排行",
+            empty:"无排行",
             total:0,
             pageSize:20,
             currentPage:(query.page || 1)*1,
-            theGameID:query.game || 'LOL',
             tableData:[],
             regionFilter: {
                 value:(query.zone || 0)*1 ,
-                options: [
-                    {
-                        label: "热门地区",
-                        options: [
-                            {
-                                value: 0,
-                                label: "所有地区"
-                            },
-                            {
-                                value: 8,
-                                label: "中国"
-                            },
-                            {
-                                value: 1,
-                                label: "韩国"
-                            }
-                        ]
-                    },
-                    {
-                        label: "其它赛区",
-                        options: [
-                            
-                            {
-                                value: 2,
-                                label: "北美"
-                            },
-                            {
-                                value: 3,
-                                label: "南美洲"
-                            },
-                            {
-                                value: 4,
-                                label: "巴西"
-                            },
-                            {
-                                value: 5,
-                                label: "欧洲"
-                            },
-                            {
-                                value: 6,
-                                label: "独联体"
-                            },
-                            {
-                                value: 7,
-                                label: "土耳其"
-                            },
-                            {
-                                value: 9,
-                                label: "中国台湾"
-                            },
-                            {
-                                value: 10,
-                                label: "日本"
-                            },
-                            {
-                                value: 11,
-                                label: "越南"
-                            },
-                            {
-                                value: 12,
-                                label: "东南亚"
-                            },
-                            {
-                                value: 13,
-                                label: "大洋洲"
-                            },
-                            {
-                                value: 14,
-                                label: "拉美"
-                            },
-                            {
-                                value: 15,
-                                label: "亚太"
-                            }
-                        ]
-                    }
-                ]
             }
         };
 
         if(process.client){
             console.log("客户端异步加载数据")
-            api.getTeamList({
-                game_id:_data.theGameID,
+            api.getMyList({
                 page_status:_data.regionFilter.value *1,
                 page_size:_data.pageSize,
                 page:_data.currentPage
@@ -148,8 +48,7 @@ export default {
             callback(null,_data); // 先渲染
         }else{
             console.log("服务端同步加载数据")
-            let _list = await api.getTeamList({
-                game_id:_data.theGameID,
+            let _list = await api.getMyList({
                 page_status:_data.regionFilter.value *1,
                 page_size:_data.pageSize,
                 page:_data.currentPage
@@ -158,7 +57,6 @@ export default {
                 if(_list.count)_data.total=_list.count *1;
                 if(_list.list)_data.tableData=api.formatTeamList(_list.list);
             }
-            console.log("fanhui2121212");
             callback(null,_data);
             return _data;
         }
@@ -166,105 +64,21 @@ export default {
     data(){
         // console.log(this);
         return {
-            title:'战队排行榜',
-            // name:app.head.title,
-            empty:"暂无排行",
+            title:'排行榜',
+            empty:"无排行",
             total:0,
             pageSize:20,
             currentPage:1,
-            theGameID:'LOL',
-            tableData:[],
-            regionFilter: {
-                value:0 ,
-                options: [
-                    {
-                        label: "热门地区",
-                        options: [
-                            {
-                                value: 0,
-                                label: "所有地区"
-                            },
-                            {
-                                value: 8,
-                                label: "中国"
-                            },
-                            {
-                                value: 1,
-                                label: "韩国"
-                            }
-                        ]
-                    },
-                    {
-                        label: "其它赛区",
-                        options: [
-                            
-                            {
-                                value: 2,
-                                label: "北美"
-                            },
-                            {
-                                value: 3,
-                                label: "南美洲"
-                            },
-                            {
-                                value: 4,
-                                label: "巴西"
-                            },
-                            {
-                                value: 5,
-                                label: "欧洲"
-                            },
-                            {
-                                value: 6,
-                                label: "独联体"
-                            },
-                            {
-                                value: 7,
-                                label: "土耳其"
-                            },
-                            {
-                                value: 9,
-                                label: "中国台湾"
-                            },
-                            {
-                                value: 10,
-                                label: "日本"
-                            },
-                            {
-                                value: 11,
-                                label: "越南"
-                            },
-                            {
-                                value: 12,
-                                label: "东南亚"
-                            },
-                            {
-                                value: 13,
-                                label: "大洋洲"
-                            },
-                            {
-                                value: 14,
-                                label: "拉美"
-                            },
-                            {
-                                value: 15,
-                                label: "亚太"
-                            }
-                        ]
-                    }
-                ]
-            }
+            tableData:[]
         };
     },
     methods: {
-        getTeamListData(){
-            console.log('--------------currentChange------------',this.theGameID)
+        getListData(){
             var _this = this;
-            this.empty ="正在加载数据...";
+            this.empty ="加载...";
             this.tableData = [];
             
-            api.getTeamList({
-                game_id:this.theGameID,
+            api.getMyList({
                 page_status:this.regionFilter.value *1,
                 page_size:this.pageSize,
                 page:this.currentPage
@@ -273,51 +87,61 @@ export default {
                     if(_list.count)_this.total=_list.count *1;
                     if(_list.list)_this.tableData=api.formatTeamList(_list.list);
                 }else{
-                    _this.empty ="暂无排行";
+                    _this.empty ="无排行";
                 }
             });
         },
         zoneChange(val){
+            // 条件筛选
             this.currentPage = 1;
             this.page_status = val;
             this.$router.push({ query: {zone: val}});
-            this.getTeamListData();
+            this.getListData();
         },
         currentChange(page){
+            //分页
             this.currentPage = page;
             let query = {page: page};
             if(this.regionFilter.value) query.zone = this.regionFilter.value;
             this.$router.push({query });
-            this.getTeamListData();
-        },
-        rowClick(row, column, event) {
-            // console.log(event);
-            // console.log("row", row);
-            // console.log("column", column);
-            this.$router.push(`/team/${row.id}/`);
-        },
-        renderHeader(h, { column, $index }) {
-            // console.log("column",column);
-            // console.log("$index",$index);
-            var _dom = [];
-            if (column.columnKey)
-                _dom.push(
-                    h("i", {
-                        class: column.columnKey,
-                        style: "color:rgba(255, 255, 255,0.5);margin-right:5px;"
-                    })
-                );
-            _dom.push(h("em", column.label));
-            return h("span", _dom, { style: "height:40px" });
-        },
-        formatter(row, column, cellValue, index) {
-            return cellValue;
+            this.getListData();
         }
     }
 
 
     */
 
+
+
+
+/*
+    asyncData() {
+      // 数组解构获得对应请求的数据
+      let [indexData, recommendAuthors, recommendBooks] = await Promise.all([
+        // 文章列表
+        app.$api.getIndexList({
+          first: 20,
+          order: 'POPULAR',
+          category: 1
+        }).then(res => res.s == 1 ? res.d : {}),
+        // 推荐作者
+        app.$api.getRecommendAuthor({
+          limit: 5
+        }).then(res => res.s == 1 ? res.d : []),
+        // 推荐小册
+        app.$api.getRecommendBook().then(res => res.s === 1 ? res.d.data : []),
+      ])
+      return {
+        indexData,
+        recommendAuthors,
+        recommendBooks
+      }
+    }
+
+    */
+
+
+   
 
 };
 </script>
