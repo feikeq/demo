@@ -52,6 +52,7 @@ export default {
     await ajaxTest();
     return {
         head:app.head,  // nuxt.config.js 里的head配置
+        currentPage:(query.page || 1)*1,  //翻页 当前页码
         name 
     };
   },
@@ -62,6 +63,13 @@ export default {
     currentChange(page){
         console.log('--------------翻页------------');
         this.$router.push({ query: {page: page}});
+        /* 其实没必要开启 watchQuery: ['page'] // watchQuery监听翻页 - 网址路径上参数的变化
+        服务端：直接通过 asyncData 里的 query 获取地址栏参数再去请求数据服务端渲染即可 
+        客户端：直接在 methods 里添加请求数据的方法修改 data 数据异步渲染即可
+        现在就是要有个公共函数能让服务端和客户端一起调用的：
+        import * as api from "@/api/team";
+        api.getXXXXX();
+        */
     },
   },
   data() {
@@ -107,8 +115,8 @@ export default {
       return this.$store.state.todos.list;
     },
   },
-  watchQuery: ['page'] // watchQuery监听翻页 - 网址路径上参数的变化
   /*
+  watchQuery: ['page'] // watchQuery监听翻页 - 网址路径上参数的变化
   nuxt的官方文档中提供了watchQuery属性可以监听参数字符串的更改。
   如果定义的字符串发生变化，将调用所有组件方法(asyncData, fetch, validate, layout, …)。 
   为了提高性能，默认情况下禁用。
