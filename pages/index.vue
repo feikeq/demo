@@ -3,7 +3,7 @@
     <div>
       <Logo />
 
-      <p>服务端拿到数据了吗？:{{ServerData}}</p>
+      <p>服务端拿到数据了吗？:{{ServerRenderDataTag}}</p>
 
       <div class="links">
         <NLink to="./users/">🚀🚀🚀 进入users路由节点 🚀🚀</NLink>
@@ -112,7 +112,7 @@ export default {
       head: app.head, // nuxt.config.js 里的head配置
       FKasyncData: "肥客FK项目",
       UA,
-      ServerData:true
+      ServerRenderDataTag:true
     };
   },
   fetch({ store, params }) {
@@ -158,7 +158,7 @@ export default {
       console.log("");
     }
 
-    return {ServerData:false, FKdata: "测试数据bar", LUA, ccav };
+    return {ServerRenderDataTag:false, FKdata: "测试数据bar", LUA, ccav };
   },
   computed: {
     todos() {
@@ -168,10 +168,16 @@ export default {
   created() {
     console.log("-------- 4.created --------");
     console.log("server:"+process.server,"client:"+process.client);
-    // console.log("==this==", this.ccav); //这里都还是 true
-    // console.log("==this==", this); // 展开后变成 false
-    // console.log("created访问asyncData的值", this.FKasyncData, this.UA);
-    // console.log("created访问data的值", this.FKdata, this.LUA);
+    console.log("==this==", this.ccav); //这里都还是 true
+    console.log("==this==", this); // 展开后变成 false
+    console.log("created访问asyncData的值", this.FKasyncData, this.UA);
+    console.log("created访问data的值", this.FKdata, this.LUA);
+
+    // 判断是否是客户端 并且 服务端没有渲染数据标识
+    if(process.client && !this.ServerRenderDataTag){
+        // 客户端异步加载数据
+    }
+    
   },
   head() {
     console.log("-------- 5.head --------");

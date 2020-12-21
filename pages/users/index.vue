@@ -18,9 +18,10 @@ export default {
 
 
 /*
-  服务端同步数据 客户端异步数据 和 分页的解决
-  async asyncData({ app, params,query,env,$config },callback) {
+  服务端同步数据 客户端异步数据 和 分页的解决 使用 进行双端渲染 
+  async asyncData({ app, params,query,env,$config }) {
         console.log("::::::::: asyncData ::::::::");
+        if(!process.server) return;
         let _data = {
             title:'排行榜',
             name:app.head.title,
@@ -31,35 +32,21 @@ export default {
             tableData:[],
             regionFilter: {
                 value:(query.zone || 0)*1 ,
-            }
+            },
+            ServerRenderDataTag:true // 服务端加载数据标识
+            
         };
-
-        if(process.client){
-            console.log("客户端异步加载数据")
-            api.getMyList({
-                page_status:_data.regionFilter.value *1,
-                page_size:_data.pageSize,
-                page:_data.currentPage
-            },function(_list){
-                if(_list.count)_data.total=_list.count *1;
-                if(_list.list)_data.tableData=api.formatTeamList(_list.list);
-                callback(null,_data); // 再填充数据
-            }); 
-            callback(null,_data); // 先渲染
-        }else{
-            console.log("服务端同步加载数据")
-            let _list = await api.getMyList({
-                page_status:_data.regionFilter.value *1,
-                page_size:_data.pageSize,
-                page:_data.currentPage
-            });
-            if(_list){
-                if(_list.count)_data.total=_list.count *1;
-                if(_list.list)_data.tableData=api.formatTeamList(_list.list);
-            }
-            callback(null,_data);
-            return _data;
+        console.log("服务端同步加载数据")
+        let _list = await api.getMyList({
+            page_status:_data.regionFilter.value *1,
+            page_size:_data.pageSize,
+            page:_data.currentPage
+        });
+        if(_list){
+            if(_list.count)_data.total=_list.count *1;
+            if(_list.list)_data.tableData=api.formatTeamList(_list.list);
         }
+        return _data;
     },
     data(){
         // console.log(this);
@@ -69,7 +56,8 @@ export default {
             total:0,
             pageSize:20,
             currentPage:1,
-            tableData:[]
+            tableData:[],
+            ServerRenderDataTag:false // 服务端加载数据标识
         };
     },
     methods: {
@@ -106,7 +94,13 @@ export default {
             this.$router.push({query });
             this.getListData();
         }
-    }
+    },
+    created() {
+        // 判断是否是客户端 并且 服务端没有渲染数据标识
+        if(process.client && !this.ServerRenderDataTag){
+            this.getListData(); // 客户端异步加载数据
+        }
+    },
 
 
     */
