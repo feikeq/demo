@@ -1,4 +1,12 @@
 /*
+ * @Author: FeikeQ
+ * @Date: 2020-12-19 14:15:23
+ * @LastEditTime: 2020-12-21 09:55:34
+ * @LastEditors: FeikeQ
+ * @FilePath: /demo/middleware/device.js
+ * @Description: 
+ */
+/*
 middleware 中间件：允许您定义一个自定义函数运行在一个页面或一组页面渲染之前。
     每一个中间件应放置在 middleware/ 目录。
     文件名的名称将成为中间件名称 (middleware/auth.js将成为 auth 中间件)。
@@ -12,7 +20,7 @@ middleware 中间件：允许您定义一个自定义函数运行在一个页面
 
 import { UAParser } from "ua-parser-js"; // https://github.com/faisalman/ua-parser-js
 export default function (context) {
-  console.log("----------middleware---------");
+  console.log("-------- 0.middleware --------");
   //   console.log("server:" + process.server, "client:" + process.client);
   //一个中间件接收 context 作为第一个参数：
   context.userAgent = process.server

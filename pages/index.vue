@@ -30,7 +30,6 @@
         </pre>
         <b>{{ ccav }}</b> <button @click="changeccav">改变ccav值</button>
       </h3>
-      
     </div>
   </div>
 </template>
@@ -39,6 +38,36 @@
 import { mapMutations } from "vuex";
 import { UAParser } from "ua-parser-js";
 
+
+/*
+Nuxt 直接访问路由：
+    Nuxt 在服务端会做
+    -------- 0.middleware --------
+    -------- 1.asyncData --------
+    -------- 2.fetch --------
+    -------- 3.data --------
+    -------- 4.created --------
+
+    Nuxt 在客户端会做
+    -------- 3.data --------
+    -------- 4.created --------
+    -------- 5.head --------
+    -------- 6.mounted --------
+
+Nuxt 通过 nuxt-link 访问路由：
+    Nuxt 在服务端什么都不做！
+    
+    Nuxt 在客户端会做
+    -------- 0.middleware --------
+    -------- 1.asyncData --------
+    -------- 2.fetch --------
+    -------- 3.data --------
+    -------- 4.created --------
+    -------- 5.head --------
+    -------- 6.mounted --------
+
+
+*/
 export default {
   /*
     中间件：允许您定义一个自定义函数运行在一个页面或一组页面渲染之前。
@@ -52,11 +81,13 @@ export default {
     */
   middleware: "device", //中间件 可以在 pages 或者 layouts 或者 nuxt.config.js的路由router中 使用
   asyncData({ app, query, params, req, res, error }) {
+    console.log("-------- 1.asyncData --------");
+    console.log("server:"+process.server,"client:"+process.client);
+
     // layouts 好像没有asyncData这个方法
 
     // 每次加载组件前调用
     // 由于asyncData方法是在组件 初始化 前被调用的，所以在方法内是没有办法通过 this 来引用组件的实例对象会提示undefined。
-    console.log(".......asyncData......");
     console.log(
       "使用公共函数库 __ $utils2",
       app.$utils.addQueryString("http://www.t.cn/?c=2", "a=1")
@@ -75,8 +106,15 @@ export default {
     }
 
     return {
-        head:app.head,  // nuxt.config.js 里的head配置
-        FKasyncData: "肥客FK项目", UA };
+      head: app.head, // nuxt.config.js 里的head配置
+      FKasyncData: "肥客FK项目",
+      UA,
+    };
+  },
+  fetch({ store, params }) {
+    // fetch方法用于在呈现页面之前填充存储
+    console.log("-------- 2.fetch --------");
+    console.log("server:"+process.server,"client:"+process.client);
   },
   methods: {
     ...mapMutations({
@@ -88,9 +126,9 @@ export default {
     },
   },
   data() {
+    console.log("-------- 3.data --------");
+    console.log("server:"+process.server,"client:"+process.client);
     //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
-    console.log("------pages------");
-    // console.log("server:" + process.server, "client:" + process.client);
 
     var LUA = {};
 
@@ -118,16 +156,32 @@ export default {
 
     return { FKdata: "测试数据bar", LUA, ccav };
   },
-  fetch() {
-    // fetch方法用于在呈现页面之前填充存储
+  computed: {
+    todos() {
+      return this.$store.state.todos.list;
+    },
+  },
+  created() {
+    console.log("-------- 4.created --------");
+    console.log("server:"+process.server,"client:"+process.client);
+    // console.log("==this==", this.ccav); //这里都还是 true
+    // console.log("==this==", this); // 展开后变成 false
+    // console.log("created访问asyncData的值", this.FKasyncData, this.UA);
+    // console.log("created访问data的值", this.FKdata, this.LUA);
   },
   head() {
+    console.log("-------- 5.head --------");
+    console.log("server:"+process.server,"client:"+process.client);
     // 为此页设置元标记
     return {
-      title: "网站的标题2(" + this.$route.params.id + ") - " + this.head.title ,
+      title: "网站的标题2(" + this.$route.params.id + ") - " + this.head.title,
       meta: [
-        { name: "keywords",hid: "keywords", content: "HTML,CSS,XML,JavaScript," + this.head.meta[2].content },
-        { name: "author",hid: "author", content: "FK68.net" },
+        {
+          name: "keywords",
+          hid: "keywords",
+          content: "HTML,CSS,XML,JavaScript," + this.head.meta[2].content,
+        },
+        { name: "author", hid: "author", content: "FK68.net" },
         {
           hid: "description", //为了避免子组件中的 meta 标签不能正确覆盖父组件中相同的标签而产生重复的现象，建议利用 hid 键为 meta 标签配一个唯一的标识编号。
           name: "description",
@@ -136,18 +190,10 @@ export default {
       ],
     };
   },
-  computed: {
-    todos() {
-      return this.$store.state.todos.list;
-    },
-  },
-  created() {
-    console.log("server:" + process.server, "client:" + process.client);
-    console.log("==this==", this.ccav); //这里都还是 true
-    console.log("==this==", this); // 展开后变成 false
-    console.log("created访问asyncData的值", this.FKasyncData, this.UA);
-    console.log("created访问data的值", this.FKdata, this.LUA);
-  },
+  mounted(){
+    console.log("-------- 6.mounted --------");
+    console.log("server:"+process.server,"client:"+process.client);
+  }
 };
 </script>
 
