@@ -3,9 +3,12 @@
     <div>
       <Logo />
 
+      <p>服务端拿到数据了吗？:{{ServerData}}</p>
+
       <div class="links">
         <NLink to="./users/">🚀🚀🚀 进入users路由节点 🚀🚀</NLink>
       </div>
+
 
       <h3 class="title">
         {{
@@ -56,7 +59,7 @@ Nuxt 直接访问路由：
 
 Nuxt 通过 nuxt-link 访问路由：
     Nuxt 在服务端什么都不做！
-    
+
     Nuxt 在客户端会做
     -------- 0.middleware --------
     -------- 1.asyncData --------
@@ -109,6 +112,7 @@ export default {
       head: app.head, // nuxt.config.js 里的head配置
       FKasyncData: "肥客FK项目",
       UA,
+      ServerData:true
     };
   },
   fetch({ store, params }) {
@@ -154,7 +158,7 @@ export default {
       console.log("");
     }
 
-    return { FKdata: "测试数据bar", LUA, ccav };
+    return {ServerData:false, FKdata: "测试数据bar", LUA, ccav };
   },
   computed: {
     todos() {
