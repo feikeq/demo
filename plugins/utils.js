@@ -238,4 +238,58 @@ export default {
         );
     return str;
   },
+
+
+  // Cookie操作:获取、设置、删除 
+  appCookie: function (c_name, value, expireday, path, domain) {
+    var COOKIE = window.document.cookie;
+    if (value) {
+        //setCookie + delCookie
+        if (expireday < 0) value = "";
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + expireday);
+        var _tmp = c_name +
+        "=" +
+        encodeURIComponent(value) +
+        (expireday == null ? "" : "; expires=" + exdate.toGMTString()) +
+        (path == null ? "" : "; path=" + path) +
+        (domain == null ? "" : "; domain=" + domain);
+
+        window.document.cookie =
+            c_name +
+            "=" +
+            encodeURIComponent(value) +
+            (expireday == null ? "" : "; expires=" + exdate.toGMTString()) +
+            (path == null ? "" : "; path=" + path) +
+            (domain == null ? "" : "; domain=" + domain);
+    } else {
+        //getCookie
+        if (COOKIE.length > 0) {
+            var c_start = COOKIE.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                var c_end = COOKIE.indexOf(";", c_start);
+                if (c_end == -1) c_end = COOKIE.length;
+                return decodeURIComponent(COOKIE.substring(c_start, c_end));
+            }
+        }
+        return null;
+    }
+    return true;
+},
+
+
+  getCookieArray: function (cookiestr) {
+      var _cookiestr = cookiestr || (process.browser?window.document.cookie:false);
+        if (!_cookiestr) return {};
+        var arr = _cookiestr.split(";");
+        var _temp = {};
+        for (var i = 0; i < arr.length; i++) {
+            var t = arr[i].split("=");
+            var key = t[0].replace(/(^\s*)|(\s*$)/g, "");
+            var val = t[1];
+            _temp[key] = unescape(val);
+        }
+        return _temp;
+    }
 };

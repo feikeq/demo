@@ -9,7 +9,7 @@
     <p>当前时间：{{ $utils.formatime(Date.now(), "yyyy-MM-dd hh:mm:ss") }}</p>
     <div>
       <AButton type="primary" @click="add('hahahahah')">添加数据ADD</AButton>
-      <AButton>Default AButton</AButton>
+      <AButton @click="currentChange">ADD COOIKE</AButton>
       <AButton type="dashed">Dashed AButton</AButton>
       <br />
       <a-icon type="step-forward" />
@@ -61,7 +61,11 @@ export default {
       add: "todos/add",
     }),
     currentChange(page){
-        console.log('--------------翻页------------');
+        console.log(this.$utils.appCookie('token_5','55555',10,"/"));
+        console.log('--------------翻页------------',this.$utils.getCookieArray());
+        console.log('this.$utils.appCookie',this.$utils.appCookie('token_5'))
+
+
         this.$router.push({ query: {page: page}});
         /* 其实没必要开启 watchQuery: ['page'] // watchQuery监听翻页 - 网址路径上参数的变化
         服务端：直接通过 asyncData 里的 query 获取地址栏参数再去请求数据服务端渲染即可 
