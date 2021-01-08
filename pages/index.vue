@@ -85,7 +85,29 @@ export default {
     中间件可以异步执行,只需要返回一个 Promise 或使用第 2 个 callback 作为第一个参数
     */
   middleware: "device", //中间件 可以在 pages 或者 layouts 或者 nuxt.config.js的路由router中 使用
-  asyncData({ app, query, params, req, res, error }) {
+
+  /*
+  context上下文对象：
+    app	vue根实例	客户端 & 服务端	包含所有插件的根实例。例如:想使用axios，可以通过context.app.$axios获取
+    isClient	Boolean	客户端 & 服务端	是否来自客户端渲染，废弃，请使用process.client
+    isServer	Boolean	客户端 & 服务端	是否来自服务端渲染，废弃，请使用process.server
+    isStatic	Boolean	客户端 & 服务端	是否通过nuxt generate
+    isDev	Boolean	客户端 & 服务端	是否开发模式，在生产坏境的数据缓存中用到
+    isHMR	Boolean	客户端 & 服务端	是否通过模块热替换，仅在客户端以dev模式
+    route	路由	客户端 & 服务端	路由实例
+    store	vuex数据	客户端 & 服务端	Vuex.sttore实例
+    env	l Object	客户端 & 服务端	nuxt.config.js中的环境变量
+    params	Object	客户端 & 服务端	route.params的别名
+    query	Object	客户端 & 服务端	route.query的别名
+    req	http.Request	服务端	Node.js API的Request对象。如果nuxt以中间件形式使用的话，这个对象就根据你所使用的框架（个人理解为页面）而定。nuxt generate 不可用
+    res	http.Reponse	服务端	Node.js API的Reponse对象。如果nuxt以中间件形式使用的话，这个对象就根据你所使用的框架（个人理解为页面）而定。nuxt generate 不可用
+    redirect	Function	服务端	用于重定向另一个路由，状态码在服务端被使用，默认302 redirect([status,]path[,query])
+    error	Function	客户端 & 服务端	前往错误页面，error(parmas),params包含statusCode和message字段
+    nuxtState	Object	客户端	nuxt状态
+    beforeNuxtRender（fn）	Function	服务端	更新NUXT在客户端呈现的变量,具体了解请看官网
+转自：https://www.jianshu.com/p/a37fd499f0c1 
+  */
+  asyncData({ app, route, store, env, query, params, req, res, redirect, error }) {
     console.log("-------- 1.asyncData --------");
     console.log("server:" + process.server, "client:" + process.client);
 
