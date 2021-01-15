@@ -55,10 +55,10 @@ export default {
     ); //
     // console.log('request:',req);
     // console.log('response:',res);
-    console.log("params:", params);
+    console.log("this.$route.params:", params);
     // console.log('req.headers.host:',req.headers);
     console.log("aaaaapppp app axios", app.$axios);
-    console.log("query", query);
+    console.log("this.$route.query", query);
 
     var name = "(没有异步) 路由地址 fullPath";
 
