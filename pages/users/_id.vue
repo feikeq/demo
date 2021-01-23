@@ -46,11 +46,11 @@ export default {
     beforeNuxtRender（fn）	Function	服务端	更新NUXT在客户端呈现的变量,具体了解请看官网
 转自：https://www.jianshu.com/p/a37fd499f0c1 
   */
-  asyncData({ app, route, store, env, query, params, req, res, redirect, error }) {
+  async asyncData({ app, route, store, env, query, params, req, res, redirect, error }) {
     // 每次加载组件前调用 https://www.nuxtjs.cn/api/context
     // 由于asyncData方法是在组件 初始化 前被调用的，所以在方法内是没有办法通过 this 来引用组件的实例对象会提示undefined。
     console.log(
-      ".......asyncData......",
+      ".......async.asyncData......",
       app.$utils.formatime(1606722602362, "yyyy-MM-dd hh:mm:ss")
     ); //
     // console.log('request:',req);
@@ -101,6 +101,15 @@ export default {
     //如果组件的数据不需要异步获取或处理，可以直接返回指定的字面对象作为组件的数据。
     console.log("------data------", this);
     // console.log('data访问不了asyncData的值呀',this.name);
+    
+    console.log("------process.client------", process.client);
+    console.log("------process.env------",process.env);
+    
+    // 如果有 asyncData 有返回，都可以不用data这个项
+    // 当然如果你想区别同步和异步数据 可以在这个data里定义其它名字的异步数据对象
+    // 一般是同步和已不的数据对象体共用的，
+    // 例如你页面初始加载 list 在服务端拿了数据，之后客户端有相应翻页交互也要更新这个 list ，
+    //这种就只要在 asyncData定义好list 就行了 data里就别定了
     return { foo: "bar", current: null };
   },
   fetch(store, params) {
