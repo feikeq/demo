@@ -111,6 +111,8 @@ export default {
     console.log("-------- 1.asyncData --------");
     console.log("server:" + process.server, "client:" + process.client);
 
+    console.log("store",store.state.todos.list)
+
     // layouts 好像没有asyncData这个方法
 
     // 每次加载组件前调用
