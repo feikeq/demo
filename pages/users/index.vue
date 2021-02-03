@@ -136,7 +136,48 @@ export default {
 
 
    
+/*
 
+export default {
+    async asyncData({ app, query }) {
+        try {
+            // 获取页面顶部轮播图信息
+            const getBanner = () => {
+                return app.$axios.$get("zz/zy/banner");
+            };
+            // 获取底部配置信息
+            const getFooter = () => {
+                return app.$axios.$get("zz/zy/footer", {
+                    params: {
+                        smark: query.smark,
+                    },
+                });
+            };
+            // 并发获取首屏数据，服务端获取
+            const [banner, footer] = await Promise.all([
+                getBanner(),
+                getFooter(),
+            ]);
+            return { banner: banner, footer: footer };
+        } catch (e) {
+            console.log("interface timeout or format error => ", e);
+            return {};
+        }
+    },
+    mounted() {
+        // 非首屏使用的数据, 客户端获取
+        this.loadListData();
+    },
+    methods: {
+        loadListData() {
+            this.$axios.$get("zz/zy/list").then(() => {
+                // 数据处理逻辑
+            });
+        },
+    },
+};
+
+*/
 };
 </script>
 
