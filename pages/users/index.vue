@@ -137,7 +137,25 @@ export default {
 
    
 /*
+应用到的特性主要包括asyncData异步获取数据、mounted不支持服务端渲染、no-ssr组件不在服务端渲染中呈现；
+通过相关特性做到API数据和页面结构合理拆分，首屏所需数据和结构通过服务端获取并渲染，非首屏数据和结构通过客户端获取并渲染。
 
+no-ssr结构拆分
+<template>
+ <div>
+ <!-- 顶部banner -->
+ <banner :banner="banner" />
+ <!-- 非首屏所需结构，通过no-ssr组件达到不在服务端渲染目的-->
+ <no-ssr>
+ <!-- 商品列表 -->
+ <prod-list :listData="listData"/>
+ </no-ssr>
+ </div>
+</template>
+
+
+
+API数据拆分
 export default {
     async asyncData({ app, query }) {
         try {
