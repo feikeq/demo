@@ -47,6 +47,7 @@ export default {
 
   /*
    ** Customize the progress-bar color
+   ** 自定义Nuxt进度条状态条颜色
    */
   loading: {
     color: "red",
