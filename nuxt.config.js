@@ -43,6 +43,12 @@ export default {
       { rel: "apple-touch-icon", type: "image/x-icon", href: `/exp.png` },
       { rel: "apple-touch-icon", href: "/exp.png", sizes: "512x512" },
     ],
+    script: [
+      {
+        type: 'text/javascript', 
+        src: 'https://unpkg.com/flv.js/dist/flv.min.js'
+      },
+    ]
   },
 
   /*
