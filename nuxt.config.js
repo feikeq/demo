@@ -45,7 +45,7 @@ export default {
     ],
     script: [
       {
-        type: 'text/javascript', 
+        type: 'text/javascript',
         src: 'https://unpkg.com/flv.js/dist/flv.min.js'
       },
     ]
@@ -69,6 +69,7 @@ export default {
   plugins: ["@/plugins/antd-ui", "~/plugins/FKaxios"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
+  // components设置为true时，它将包含nuxt/components依赖项并将~/components在模板中使用它们时自动导入您的组件
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
