@@ -1,5 +1,13 @@
 export default {
-  //env属性定义客户端应可用的环境变量也可从服务端共享
+  /*
+  env属性定义客户端应可用的环境变量也可从服务端共享
+  通过 process.env.baseUrl 或 context.env.baseUrl 请参阅 context API.
+  我们可以使用它来配置axios。插件/axios.js
+  import axios from 'axios'
+  export default axios.create({
+    baseURL: process.env.baseUrl
+  })
+  */
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
     NODE_ENV: process.env.NODE_ENV
