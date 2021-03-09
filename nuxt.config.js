@@ -1,4 +1,9 @@
 export default {
+  //env属性定义客户端应可用的环境变量也可从服务端共享
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    NODE_ENV: process.env.NODE_ENV
+  },
   // ssr: false,//仅限客户端渲染
   server: {
     port: 8888, // default: 3000
